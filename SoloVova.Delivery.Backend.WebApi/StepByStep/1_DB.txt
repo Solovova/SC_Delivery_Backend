@@ -1,0 +1,10 @@
+1. Create structure 
+    Core
+        Application - lib
+        Domain - lib
+    Infrastructure
+        Persistence - lib
+    Presentation
+        WebApi - Asp.Net empty
+    Tests
+        Tests - xUnit
