@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using SoloVova.Delivery.Backend.Domain;
 using SoloVova.Delivery.Backend.Persistence;
 
 namespace SoloVova.Delivery.Backend.Desktop.Context
@@ -14,9 +18,11 @@ namespace SoloVova.Delivery.Backend.Desktop.Context
             var options = new DbContextOptionsBuilder<DeliveryDbContext>()
                 .UseSqlite(connectionString)
                 .Options;
-            var context = new DeliveryDbContext(options);
-            context.Database.EnsureCreated();
+            deliveryDbContext = new DeliveryDbContext(options);
+            deliveryDbContext.Database.EnsureCreated();
         }
+        
+
 
         public static Context Instance(){
             lock (LockObject){

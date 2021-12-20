@@ -25,7 +25,7 @@ namespace SoloVova.Delivery.Backend.Desktop{
             InitializeComponent();
         }
 
-        public async Task<int> HandleAdd(CancellationToken cancellationToken){
+        public void HandleAdd(){
             var packages = new Packages{
                 IdCreateUser = Guid.NewGuid(),
                 IdDeliveryman = Guid.Empty,
@@ -37,15 +37,15 @@ namespace SoloVova.Delivery.Backend.Desktop{
             };
 
             Context.Context context = Context.Context.Instance();
-            await context.deliveryDbContext.Packages.AddAsync(packages, cancellationToken); 
-            //await context.deliveryDbContext.SaveChangesAsync(cancellationToken);
-            return 1;
+            context.deliveryDbContext.Packages.Add(packages);
+            context.deliveryDbContext.SaveChanges();
         }
         
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e){
-            CancellationToken cancellationToken = new CancellationToken();
-            var task = this.HandleAdd(cancellationToken);
-            var result = task.GetAwaiter().GetResult();
+            for (int i = 0; i < 1000; i++){
+                this.HandleAdd();    
+            }
+            
         }
     }
 }
