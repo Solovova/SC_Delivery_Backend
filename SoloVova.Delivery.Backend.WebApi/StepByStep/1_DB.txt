@@ -8,3 +8,51 @@
         WebApi - Asp.Net empty
     Tests
         Tests - xUnit
+        
+2.01. Model - Create in Domain/Packages.cs
+2.02.   Install     -   Application     -> Microsoft.EntityFrameworkCore
+        Ref         -   Application     -> Domain
+        Create      -   Application     -  Application/Interfaces/IDeliveryDbContext  
+         
+2.03.   Install     -   Persistence     -> Microsoft.EntityFrameworkCore.Sqlite
+        Ref         -   Persistence     -> Application
+        Create      -   Persistence     -  Persistence/DbInitializer
+        Create      -   Persistence     -  Persistence/DependencyInjection
+        Create      -   Persistence     -  Persistence/DeliveryDbContext
+        Create      -   Persistence     -  Persistence/EntityTypeConfigurations/DeliveryConfiguration
+        
+2.04.   Ref         -   WebApi          -> Persistence
+        Add         -   WebApi/Programs
+        
+            public static void Main(string[] args){
+                var host = CreateHostBuilder(args).Build();
+                using (var scope = host.Services.CreateScope()){
+                    var serviceProvider = scope.ServiceProvider;
+                    try{
+                        var contest = serviceProvider.GetRequiredService<DeliveryDbContext>();
+                        DbInitializer.Initialize(contest);
+                    }
+                    catch (Exception exception){
+                    }
+                }
+                host.Run();
+            }
+            
+        Add         -   WebApi/Startup
+            public IConfiguration Configuration{ get; }
+            public Startup(IConfiguration configuration){
+                Configuration = configuration;
+            }
+            
+            public void ConfigureServices(IServiceCollection services){
+                services.AddPersistence(Configuration);
+            }
+        Add         -   WebApi/appsettings.json
+            "DbConnection": "Data Source=Delivery.db",
+        
+        
+        
+        
+        
+        
+2.03.   Create      -   Exception       -  Application/Common/Exception/NotFoundException

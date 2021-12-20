@@ -5,4 +5,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SoloVova.Delivery.Backend.Domain\SoloVova.Delivery.Backend.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.13" />
+    </ItemGroup>
+
 </Project>
