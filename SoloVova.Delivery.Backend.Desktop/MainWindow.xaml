@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:SoloVova.Delivery.Backend.Desktop"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+        
     <Grid>
-
+        <Button Click="ButtonBase_OnClick"></Button>
     </Grid>
 </Window>
