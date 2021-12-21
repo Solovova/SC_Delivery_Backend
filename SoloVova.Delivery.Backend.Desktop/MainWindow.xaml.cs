@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.CreatePackage;
 using SoloVova.Delivery.Backend.Desktop.Context;
 using SoloVova.Delivery.Backend.Domain;
 
@@ -26,7 +27,7 @@ namespace SoloVova.Delivery.Backend.Desktop{
         }
 
         public void HandleAdd(){
-            var packages = new Packages{
+            var packages = new Package{
                 IdCreateUser = Guid.NewGuid(),
                 IdDeliveryman = Guid.Empty,
                 Id = Guid.NewGuid(),
@@ -37,11 +38,11 @@ namespace SoloVova.Delivery.Backend.Desktop{
             };
 
             Context.Context context = Context.Context.Instance();
-            context.deliveryDbContext.Packages.Add(packages);
+            context.deliveryDbContext.Package.Add(packages);
             context.deliveryDbContext.SaveChanges();
         }
 
-        private void ButtonAddRows1_OnClick(object sender, RoutedEventArgs e){
+        private void ButtonAddRowsSimple_OnClick(object sender, RoutedEventArgs e){
             Context.Context context = Context.Context.Instance();
             for (int i = 0; i < 10; i++){
                 var address = new Address{
@@ -49,7 +50,7 @@ namespace SoloVova.Delivery.Backend.Desktop{
                     X = 1.233m,
                     Y = 1.56445m
                 };
-                var packages = new Packages{
+                var packages = new Package{
                     IdCreateUser = Guid.NewGuid(),
                     IdDeliveryman = Guid.Empty,
                     Id = Guid.NewGuid(),
@@ -57,13 +58,30 @@ namespace SoloVova.Delivery.Backend.Desktop{
                     Details = $"Test_Details{i}",
                     CreationDate = DateTime.Now,
                     EditDate = null,
+                    AddressFrom = address
                 };
 
-
-                context.deliveryDbContext.Packages.Add(packages);
+                //context.deliveryDbContext.Address.Add(address);
+                context.deliveryDbContext.Package.Add(packages);
             }
 
             context.deliveryDbContext.SaveChanges();
+
+            this.tb.Text += "\n Add1 - Ok";
+        }
+
+        private void ButtonAddRowsByCommands_OnClick(object sender, RoutedEventArgs e){
+            var context = Context.Context.Instance();
+            var createPackageCommandHandler = new CreatePackageCommandHandler(context.deliveryDbContext);
+            var cancellationToken = new CancellationToken();
+            for (int i = 0; i < 100; i++){
+                var createPackagesCommand = new CreatePackageCommand{
+                    IdCreateUser = Guid.NewGuid(),
+                    Title = $"Test_Title{i}",
+                    Details = $"Test_Details{i}",
+                };
+                createPackageCommandHandler.Handle(createPackagesCommand, cancellationToken);
+            }
 
             this.tb.Text += "\n Add1 - Ok";
         }

@@ -9,7 +9,7 @@
         
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="300" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -18,7 +18,9 @@
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Grid.Column="0" Click="ButtonAddRows1_OnClick">Add rows</Button>
+        <Button Grid.Row="0" Grid.Column="0" Click="ButtonAddRowsSimple_OnClick">Add rows simple</Button>
+        <Button Grid.Row="1" Grid.Column="0" Click="ButtonAddRowsByCommands_OnClick">Add rows by commands</Button>
+        
         <TextBox Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" x:Name="tb"></TextBox>
     </Grid>
 </Window>

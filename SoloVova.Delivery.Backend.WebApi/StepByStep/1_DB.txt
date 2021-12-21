@@ -1,4 +1,5 @@
-1. Create structure 
+1.01.
+ Create structure 
     Core
         Application - lib
         Domain - lib
@@ -9,19 +10,19 @@
     Tests
         Tests - xUnit
         
-2.01. Model - Create in Domain/Packages.cs
-2.02.   Install     -   Application     -> Microsoft.EntityFrameworkCore
+1.02. Model - Create in Domain/Packages.cs
+1.03.   Install     -   Application     -> Microsoft.EntityFrameworkCore
         Ref         -   Application     -> Domain
         Create      -   Application     -  Application/Interfaces/IDeliveryDbContext  
          
-2.03.   Install     -   Persistence     -> Microsoft.EntityFrameworkCore.Sqlite
+1.04.   Install     -   Persistence     -> Microsoft.EntityFrameworkCore.Sqlite
         Ref         -   Persistence     -> Application
         Create      -   Persistence     -  Persistence/DbInitializer
         Create      -   Persistence     -  Persistence/DependencyInjection
         Create      -   Persistence     -  Persistence/DeliveryDbContext
         Create      -   Persistence     -  Persistence/EntityTypeConfigurations/DeliveryConfiguration
         
-2.04.   Ref         -   WebApi          -> Persistence
+1.05.   Ref         -   WebApi          -> Persistence
         Add         -   WebApi/Programs
         
             public static void Main(string[] args){
@@ -49,10 +50,3 @@
             }
         Add         -   WebApi/appsettings.json
             "DbConnection": "Data Source=Delivery.db",
-        
-        
-        
-        
-        
-        
-2.03.   Create      -   Exception       -  Application/Common/Exception/NotFoundException

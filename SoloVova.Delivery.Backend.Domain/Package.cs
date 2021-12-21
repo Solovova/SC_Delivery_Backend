@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace SoloVova.Delivery.Backend.Domain{
-    public class Packages{
+    public class Package{
         public Guid IdCreateUser{ get; set; }
         public Guid IdDeliveryman{ get; set; }
         public Guid Id{ get; set; }
@@ -9,5 +9,6 @@ namespace SoloVova.Delivery.Backend.Domain{
         public string Details { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? EditDate { get; set; }
+        public Address? AddressFrom {get; set;}
     }
 }
