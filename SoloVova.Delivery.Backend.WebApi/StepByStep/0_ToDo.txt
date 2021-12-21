@@ -1,0 +1,14 @@
+1. Desktop Table
+    Реалізувати Del
+    Реалізувати Add
+    Реалізувати Detail
+    Реалізувати Update
+1.1. React реалізувати
+    Реалізувати Del
+    Реалізувати Add
+    Реалізувати Detail
+    Реалізувати Update
+2. Mediatr
+3. Mapper
+4. Validator
+5. WebApi <- Mediatr, Mapper, Validator
