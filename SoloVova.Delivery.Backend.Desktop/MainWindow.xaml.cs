@@ -40,12 +40,32 @@ namespace SoloVova.Delivery.Backend.Desktop{
             context.deliveryDbContext.Packages.Add(packages);
             context.deliveryDbContext.SaveChanges();
         }
-        
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e){
-            for (int i = 0; i < 1000; i++){
-                this.HandleAdd();    
+
+        private void ButtonAddRows1_OnClick(object sender, RoutedEventArgs e){
+            Context.Context context = Context.Context.Instance();
+            for (int i = 0; i < 10; i++){
+                var address = new Address{
+                    Name = "Ivano-Frankivsk str. Prom",
+                    X = 1.233m,
+                    Y = 1.56445m
+                };
+                var packages = new Packages{
+                    IdCreateUser = Guid.NewGuid(),
+                    IdDeliveryman = Guid.Empty,
+                    Id = Guid.NewGuid(),
+                    Title = $"Test_Title{i}",
+                    Details = $"Test_Details{i}",
+                    CreationDate = DateTime.Now,
+                    EditDate = null,
+                };
+
+
+                context.deliveryDbContext.Packages.Add(packages);
             }
-            
+
+            context.deliveryDbContext.SaveChanges();
+
+            this.tb.Text += "\n Add1 - Ok";
         }
     }
 }
