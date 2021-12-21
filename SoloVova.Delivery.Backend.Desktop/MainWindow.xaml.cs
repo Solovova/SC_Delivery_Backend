@@ -100,11 +100,14 @@ namespace SoloVova.Delivery.Backend.Desktop{
                 if (result.IsCompletedSuccessfully){
                     foreach (var package in result.Result.Packages){
                         var deletePackageCommandHandler = new DeletePackageCommandHandler(context.deliveryDbContext);
-                        deletePackageCommandHandler.Handle(new DeletePackageCommand(){Id =package.Id }, new CancellationToken());
-                    }    
+                        deletePackageCommandHandler.Handle(new DeletePackageCommand(){Id = package.Id},
+                            new CancellationToken());
+                    }
                 }
+
+                this.Dispatcher.Invoke(() => { this.tb.Text += "\n Delete Async - Ok"; });
             }, cancellationToken);
-            
+
 
             this.tb.Text += "\n Delete - Ok";
         }
