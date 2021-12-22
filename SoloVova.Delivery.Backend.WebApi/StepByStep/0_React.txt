@@ -14,3 +14,6 @@ change index.tsx
 commit 0.01
 
 npm install axios
+
+GetAll work
+commit 0.02
