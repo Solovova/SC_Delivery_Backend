@@ -10,3 +10,4 @@
             services.AddControllers()
             endpoints.MapControllers();
             
+Commit 0.11 GetAll list work
