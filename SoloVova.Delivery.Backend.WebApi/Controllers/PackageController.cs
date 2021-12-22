@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,14 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
         }
         
         [HttpGet]
-        public async Task<ActionResult<PackageListVm>> GetAll(){
+        public async Task<ActionResult<List<PackageLookupDto>>> GetAll(){
             var query = new GetPackageListQuery(){
                 UserId = Guid.Empty
             };
             var getPackageListQueryHandler = new GetPackageListQueryHandler(_dbContext);
             var vm = await getPackageListQueryHandler.Handle(query, CancellationToken.None);
             //var vm = await Mediator.Send(query);
-            return Ok(vm);
+            return Ok(vm.Packages);
         }
         
 

@@ -15,6 +15,14 @@ namespace SoloVova.Delivery.Backend.WebApi{
         public void ConfigureServices(IServiceCollection services){
             services.AddPersistence(Configuration);
             services.AddControllers();
+            
+            services.AddCors(options => {
+                options.AddPolicy("AllowAll", policy => {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyOrigin();
+                });
+            });
         }
         
         public IConfiguration Configuration{ get; }
@@ -31,6 +39,7 @@ namespace SoloVova.Delivery.Backend.WebApi{
 
             app.UseRouting();
             app.UseHttpsRedirection();
+            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints => {
                 //endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
