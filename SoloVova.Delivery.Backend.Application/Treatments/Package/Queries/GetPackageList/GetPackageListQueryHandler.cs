@@ -18,9 +18,9 @@ namespace SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPa
                 .Where(note => true)
                 .ToListAsync(cancellationToken);
 
-            var packageListDto = new List<PackageLookupDto>();
+            var packageListDto = new List<PackageListRecordDto>();
             foreach (var package in packageQuery){
-                var packageLookupDto = new PackageLookupDto(){
+                var packageLookupDto = new PackageListRecordDto(){
                     Id = package.Id,
                     Title = package.Title
                 };

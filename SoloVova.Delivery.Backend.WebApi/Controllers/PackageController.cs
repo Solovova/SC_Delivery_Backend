@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SoloVova.Delivery.Backend.Application.Interfaces;
+using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageDetails;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageList;
 
 namespace SoloVova.Delivery.Backend.WebApi.Controllers{
@@ -17,26 +18,28 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<PackageLookupDto>>> GetAll(){
+        public async Task<ActionResult<PackageListVm>> GetAll(){
+            //Thread.Sleep( 3000 );
             var query = new GetPackageListQuery(){
                 UserId = Guid.Empty
             };
             var getPackageListQueryHandler = new GetPackageListQueryHandler(_dbContext);
             var vm = await getPackageListQueryHandler.Handle(query, CancellationToken.None);
             //var vm = await Mediator.Send(query);
-            return Ok(vm.Packages);
+            return Ok(vm);
         }
         
 
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<NoteDetailsVm>> Get(Guid id){
-        //     var query = new GetNoteDetailsQuery(){
-        //         UserId = UserId,
-        //         Id = id
-        //     };
-        //     var vm = await Mediator.Send(query);
-        //     return Ok(vm);
-        // }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PackageDetailsDto>> Get(Guid id){
+            var query = new GetPackageDetailsQuery(){
+                Id = id
+            };
+            var getPackageDetailsQueryHandler = new GetPackageDetailsQueryHandler(_dbContext);
+            var vm = await getPackageDetailsQueryHandler.Handle(query, CancellationToken.None);
+            //var vm = await Mediator.Send(query);
+            return Ok(vm);
+        }
 
         // [HttpPost]
         // public async Task<ActionResult<Guid>> Create([FromBody] CreateNoteDto createNoteDto){

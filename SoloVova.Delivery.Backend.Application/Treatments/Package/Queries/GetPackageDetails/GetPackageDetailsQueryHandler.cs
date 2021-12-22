@@ -1,20 +1,18 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SoloVova.Delivery.Backend.Application.Common.Exception;
 using SoloVova.Delivery.Backend.Application.Interfaces;
 
-namespace SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.UpdatePackage{
-    public class UpdatePackageCommandHandler{
+namespace SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageDetails{
+    public class GetPackageDetailsQueryHandler{
         private readonly IDeliveryDbContext _dbContext;
 
-        public UpdatePackageCommandHandler(IDeliveryDbContext dbContext){
+        public GetPackageDetailsQueryHandler(IDeliveryDbContext dbContext){
             _dbContext = dbContext;
         }
         
-        public async Task Handle(UpdatePackageCommand request, CancellationToken cancellationToken){
-            
+        public async Task<PackageDetailsDto> Handle(GetPackageDetailsQuery request,CancellationToken cancellationToken){
             var entity = await _dbContext.Package.FirstOrDefaultAsync(
                 package => package.Id == request.Id,
                 cancellationToken
@@ -23,12 +21,12 @@ namespace SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.Upda
             if (entity == null ){
                 throw new NotFoundException(nameof(Package), request.Id);
             }
-
-            entity.Title = request.Title;
-            entity.Details = request.Details;
-            entity.EditDate = DateTime.Now;
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            
+            return new PackageDetailsDto(){
+                Id = entity.Id,
+                Title = entity.Title,
+                Details = entity.Details
+            };
         }
     }
 }

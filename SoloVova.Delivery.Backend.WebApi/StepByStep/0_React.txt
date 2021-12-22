@@ -7,13 +7,4 @@ npx create-react-app solovova-delivery-react --template typescript
 npm react-router-dom
 npm install @types/react-router-dom
 npm install bootstrap
-
-change App.tsx
-change index.tsx
-
-commit 0.01
-
 npm install axios
-
-GetAll work
-commit 0.02
