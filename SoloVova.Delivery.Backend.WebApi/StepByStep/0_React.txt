@@ -1,0 +1,14 @@
+1. Sites
+    https://ru.reactjs.org/docs/faq-ajax.html
+    https://www.bezkoder.com/react-typescript-axios/
+    
+2. Install
+npx create-react-app solovova-delivery-react --template typescript
+npm react-router-dom
+npm install @types/react-router-dom
+npm install bootstrap
+
+change App.tsx
+change index.tsx
+
+commit 0.01

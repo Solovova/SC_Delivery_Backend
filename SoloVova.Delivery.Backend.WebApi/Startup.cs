@@ -14,6 +14,7 @@ namespace SoloVova.Delivery.Backend.WebApi{
     public class Startup{
         public void ConfigureServices(IServiceCollection services){
             services.AddPersistence(Configuration);
+            services.AddControllers();
         }
         
         public IConfiguration Configuration{ get; }
@@ -31,7 +32,8 @@ namespace SoloVova.Delivery.Backend.WebApi{
             app.UseRouting();
 
             app.UseEndpoints(endpoints => {
-                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+                //endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+                endpoints.MapControllers();
             });
         }
     }
