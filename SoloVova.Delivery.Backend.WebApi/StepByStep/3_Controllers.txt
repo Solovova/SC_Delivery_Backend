@@ -9,5 +9,6 @@
         Startup.cs
             services.AddControllers()
             endpoints.MapControllers();
+            app.UseHttpsRedirection();
             
 Commit 0.11 GetAll list work

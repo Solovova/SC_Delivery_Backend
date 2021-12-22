@@ -30,6 +30,7 @@ namespace SoloVova.Delivery.Backend.WebApi{
             }
 
             app.UseRouting();
+            app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints => {
                 //endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
