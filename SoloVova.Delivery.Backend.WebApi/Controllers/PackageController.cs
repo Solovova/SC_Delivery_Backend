@@ -19,7 +19,7 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
         
         [HttpGet]
         public async Task<ActionResult<PackageListVm>> GetAll(){
-            //Thread.Sleep( 3000 );
+            Thread.Sleep( 3000 );
             var query = new GetPackageListQuery(){
                 UserId = Guid.Empty
             };
@@ -32,6 +32,7 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PackageDetailsDto>> Get(Guid id){
+            Thread.Sleep( 3000 );
             var query = new GetPackageDetailsQuery(){
                 Id = id
             };
