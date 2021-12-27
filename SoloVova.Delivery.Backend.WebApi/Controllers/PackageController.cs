@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +13,7 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
     [Route("api/[controller]")]
     public class PackageController : BaseController{
         private  IDeliveryDbContext _dbContext;
+        private readonly int _timedelay = 0;
         
         public PackageController(IDeliveryDbContext dbContext){
             _dbContext = dbContext;
@@ -21,7 +21,7 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
         
         [HttpGet]
         public async Task<ActionResult<PackageListVm>> GetAll(){
-            Thread.Sleep( 3000 );
+            Thread.Sleep( _timedelay );
             var query = new GetPackageListQuery(){
                 UserId = Guid.Empty
             };
@@ -34,7 +34,7 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PackageDetailsDto>> Get(Guid id){
-            Thread.Sleep( 3000 );
+            Thread.Sleep( _timedelay );
             var query = new GetPackageDetailsQuery(){
                 Id = id
             };
@@ -54,7 +54,7 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdatePackageDto updatePackageDto){
-            Thread.Sleep( 3000 );
+            Thread.Sleep( _timedelay );
             var query = new UpdatePackageCommand(){
                 Id = updatePackageDto.Id,
                 Title = updatePackageDto.Title ?? "",
