@@ -4,8 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SoloVova.Delivery.Backend.Application.Interfaces;
+using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.UpdatePackage;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageDetails;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageList;
+using SoloVova.Delivery.Backend.WebApi.Models;
 
 namespace SoloVova.Delivery.Backend.WebApi.Controllers{
     [Produces("application/json")]
@@ -50,13 +52,23 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
         //     return Ok(noteId);
         // }
 
-        // [HttpPut]
-        // public async Task<IActionResult> Update([FromBody] UpdateNoteDto updateNoteDto){
-        //     var command = _mapper.Map<UpdateNoteCommand>(updateNoteDto);
-        //     command.UserId = UserId;
-        //     await Mediator.Send(command);
-        //     return NoContent();
-        // }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdatePackageDto updatePackageDto){
+            Thread.Sleep( 3000 );
+            var query = new UpdatePackageCommand(){
+                Id = updatePackageDto.Id,
+                Title = updatePackageDto.Title ?? "",
+                Details = updatePackageDto.Details ?? ""
+            };
+            var updatePackageCommandHandler = new UpdatePackageCommandHandler(_dbContext);
+
+            await updatePackageCommandHandler.Handle(query, CancellationToken.None);
+            
+            // var command = _mapper.Map<UpdateNoteCommand>(updateNoteDto);
+            // command.UserId = UserId;
+            // await Mediator.Send(command);
+            return NoContent();
+        }
 
         // [HttpDelete("{id}")]
         // public async Task<IActionResult> Delete(Guid id){
