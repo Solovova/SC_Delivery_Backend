@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SoloVova.Delivery.Backend.Application.Interfaces;
+using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.CreatePackage;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.UpdatePackage;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageDetails;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageList;
@@ -44,13 +45,22 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
             return Ok(vm);
         }
 
-        // [HttpPost]
-        // public async Task<ActionResult<Guid>> Create([FromBody] CreateNoteDto createNoteDto){
-        //     var command = _mapper.Map < CreateNoteCommand > (createNoteDto);
-        //     command.UserId = UserId;
-        //     var noteId = await Mediator.Send(command);
-        //     return Ok(noteId);
-        // }
+        [HttpPost]
+        public async Task<ActionResult<Guid>> Create([FromBody] CreatePackageDto createPackageDto){
+            // var command = _mapper.Map < CreateNoteCommand > (createNoteDto);
+            // command.UserId = UserId;
+            // var noteId = await Mediator.Send(command);
+            Thread.Sleep( _timedelay );
+            var query = new CreatePackageCommand(){
+                IdCreateUser = Guid.NewGuid(),
+                Title = createPackageDto.Title ?? "",
+                Details = createPackageDto.Details ?? ""
+            };
+            var createPackageCommandHandler = new CreatePackageCommandHandler(_dbContext);
+            var packageId = await createPackageCommandHandler.Handle(query, CancellationToken.None);
+            
+            return Ok(packageId);
+        }
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdatePackageDto updatePackageDto){
