@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SoloVova.Delivery.Backend.Application.Interfaces;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.CreatePackage;
+using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.DeletePackage;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.UpdatePackage;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageDetails;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageList;
@@ -14,7 +15,7 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
     [Route("api/[controller]")]
     public class PackageController : BaseController{
         private  IDeliveryDbContext _dbContext;
-        private readonly int _timedelay = 0;
+        private readonly int _timedelay = 2000;
         
         public PackageController(IDeliveryDbContext dbContext){
             _dbContext = dbContext;
@@ -80,15 +81,18 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
             return NoContent();
         }
 
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> Delete(Guid id){
-        //     var command = new DeleteNoteCommand(){
-        //         Id = id,
-        //         UserId = UserId
-        //     };
-        //     await Mediator.Send(command);
-        //     return NoContent();
-        // }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id){
+            Thread.Sleep( _timedelay );
+            var command = new DeletePackageCommand(){
+                Id = id
+            };
+            
+            var deletePackageCommandHandler = new DeletePackageCommandHandler(_dbContext);
+            await deletePackageCommandHandler.Handle(command, CancellationToken.None);
+            //await Mediator.Send(command);
+            return NoContent();
+        }
 
     }
 }
