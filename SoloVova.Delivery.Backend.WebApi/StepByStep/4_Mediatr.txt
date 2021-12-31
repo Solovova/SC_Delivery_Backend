@@ -1,0 +1,7 @@
+4.01.   Install     -   Application     -> MediatR
+4.02.   Install     -   Application     -> MediatR.Extensions.Microsoft.DependencyInjection
+
+4.03.   Add to commands ->  : IRequest<___results___> 
+                            : IRequest
+4.04.   Add to handlers ->  : IRequestHandler<CreateNoteCommand, Guid>
+                            : IRequestHandler<DeleteNoteCommand> -> Task<Unit> , return Unit.Value;

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using SoloVova.Delivery.Backend.Application.Interfaces;
 
 namespace SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.CreatePackage{
-    public class CreatePackageCommandHandler{
+    public class CreatePackageCommandHandler: IRequestHandler<CreatePackageCommand, Guid>{
         private readonly IDeliveryDbContext _dbContext;
 
         public CreatePackageCommandHandler(IDeliveryDbContext dbContext){
