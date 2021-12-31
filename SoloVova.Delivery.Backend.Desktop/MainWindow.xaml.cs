@@ -89,24 +89,6 @@ namespace SoloVova.Delivery.Backend.Desktop{
             this.tb.Text += "\n Add1 - Ok";
         }
 
-        private void ButtonAddRowsByMediatR_OnClick(object sender, RoutedEventArgs e){
-            var context = Context.Context.Instance();
-            //Mediator 
-            
-            var createPackageCommandHandler = new CreatePackageCommandHandler(context.deliveryDbContext);
-            var cancellationToken = new CancellationToken();
-            for (int i = 0; i < 100; i++){
-                var createPackagesCommand = new CreatePackageCommand{
-                    IdCreateUser = Guid.NewGuid(),
-                    Title = $"Test_Title{i}",
-                    Details = $"Test_Details{i}",
-                };
-                createPackageCommandHandler.Handle(createPackagesCommand, cancellationToken);
-            }
-
-            this.tb.Text += "\n Add1 - Ok";
-        }
-        
         private void ButtonDeleteAll_OnClick(object sender, RoutedEventArgs e){
             var context = Context.Context.Instance();
             var getPackageListQueryHandler = new GetPackageListQueryHandler(context.deliveryDbContext);

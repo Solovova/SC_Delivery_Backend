@@ -20,7 +20,6 @@
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Grid.Column="0" Click="ButtonAddRowsSimple_OnClick">Add rows simple</Button>
         <Button Grid.Row="1" Grid.Column="0" Click="ButtonAddRowsByCommands_OnClick">Add rows by commands</Button>
-        <Button Grid.Row="1" Grid.Column="0" Click="ButtonAddRowsByMediatR_OnClick">Add rows by MediatR</Button>
         <Button Grid.Row="2" Grid.Column="0" Click="ButtonDeleteAll_OnClick">Delete all</Button>
         
         
