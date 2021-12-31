@@ -2,11 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoloVova.Delivery.Backend.Application.Interfaces;
 
 namespace SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageList{
-    public class GetPackageListQueryHandler{
+    public class GetPackageListQueryHandler: IRequestHandler<GetPackageListQuery,PackageListVm>{
         private readonly IDeliveryDbContext _dbContext;
 
         public GetPackageListQueryHandler(IDeliveryDbContext dbContext){

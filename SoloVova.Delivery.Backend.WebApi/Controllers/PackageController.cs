@@ -14,35 +14,28 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class PackageController : BaseController{
-        private  IDeliveryDbContext _dbContext;
         private readonly int _timedelay = 2000;
-        
-        public PackageController(IDeliveryDbContext dbContext){
-            _dbContext = dbContext;
-        }
-        
+
         [HttpGet]
         public async Task<ActionResult<PackageListVm>> GetAll(){
-            Thread.Sleep( _timedelay );
+            Thread.Sleep(_timedelay);
+
             var query = new GetPackageListQuery(){
                 UserId = Guid.Empty
             };
-            var getPackageListQueryHandler = new GetPackageListQueryHandler(_dbContext);
-            var vm = await getPackageListQueryHandler.Handle(query, CancellationToken.None);
-            //var vm = await Mediator.Send(query);
+
+            var vm = await Mediator.Send(query);
             return Ok(vm);
         }
-        
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PackageDetailsDto>> Get(Guid id){
-            Thread.Sleep( _timedelay );
+            Thread.Sleep(_timedelay);
             var query = new GetPackageDetailsQuery(){
                 Id = id
             };
-            var getPackageDetailsQueryHandler = new GetPackageDetailsQueryHandler(_dbContext);
-            var vm = await getPackageDetailsQueryHandler.Handle(query, CancellationToken.None);
-            //var vm = await Mediator.Send(query);
+            var vm = await Mediator.Send(query);
             return Ok(vm);
         }
 
@@ -51,48 +44,41 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
             // var command = _mapper.Map < CreateNoteCommand > (createNoteDto);
             // command.UserId = UserId;
             // var noteId = await Mediator.Send(command);
-            Thread.Sleep( _timedelay );
+            Thread.Sleep(_timedelay);
             var query = new CreatePackageCommand(){
                 IdCreateUser = Guid.NewGuid(),
                 Title = createPackageDto.Title ?? "",
                 Details = createPackageDto.Details ?? ""
             };
-            var createPackageCommandHandler = new CreatePackageCommandHandler(_dbContext);
-            var packageId = await createPackageCommandHandler.Handle(query, CancellationToken.None);
-            
+
+            var packageId = await Mediator.Send(query);
             return Ok(packageId);
         }
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdatePackageDto updatePackageDto){
-            Thread.Sleep( _timedelay );
-            var query = new UpdatePackageCommand(){
+            Thread.Sleep(_timedelay);
+            var command = new UpdatePackageCommand(){
                 Id = updatePackageDto.Id,
                 Title = updatePackageDto.Title ?? "",
                 Details = updatePackageDto.Details ?? ""
             };
-            var updatePackageCommandHandler = new UpdatePackageCommandHandler(_dbContext);
 
-            await updatePackageCommandHandler.Handle(query, CancellationToken.None);
-            
             // var command = _mapper.Map<UpdateNoteCommand>(updateNoteDto);
             // command.UserId = UserId;
-            // await Mediator.Send(command);
+            await Mediator.Send(command);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id){
-            Thread.Sleep( _timedelay );
+            Thread.Sleep(_timedelay);
             var command = new DeletePackageCommand(){
                 Id = id
             };
-            
-            var deletePackageCommandHandler = new DeletePackageCommandHandler(_dbContext);
-            await deletePackageCommandHandler.Handle(command, CancellationToken.None);
-            //await Mediator.Send(command);
+
+            await Mediator.Send(command);
             return NoContent();
         }
-
     }
 }

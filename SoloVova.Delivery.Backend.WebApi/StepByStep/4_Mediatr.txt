@@ -5,3 +5,27 @@
                             : IRequest
 4.04.   Add to handlers ->  : IRequestHandler<CreateNoteCommand, Guid>
                             : IRequestHandler<DeleteNoteCommand> -> Task<Unit> , return Unit.Value;
+                            
+4.05.   Add file -> DependencyInjection.cs
+        public static class DependencyInjection{
+                public static IServiceCollection AddApplication(this IServiceCollection services){
+                    services.AddMediatR(Assembly.GetExecutingAssembly());
+                    return services;
+                }
+            }
+            
+4.06.   Add     -   WebApi Startup.cs    -> services.AddApplication();
+
+4.07.   Add     -   WebApi BaseController.cs ->
+                                    private IMediator? _mediator;
+                            
+                                    protected IMediator Mediator{
+                                        get{
+                                            _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+                                            if (this._mediator == null){
+                                                throw new Exception("Mediator is null");
+                                            }
+                            
+                                            return this._mediator;
+                                        }
+                                    }

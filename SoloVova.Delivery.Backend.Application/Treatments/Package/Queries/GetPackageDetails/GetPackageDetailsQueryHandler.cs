@@ -1,11 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoloVova.Delivery.Backend.Application.Common.Exception;
 using SoloVova.Delivery.Backend.Application.Interfaces;
 
 namespace SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageDetails{
-    public class GetPackageDetailsQueryHandler{
+    public class GetPackageDetailsQueryHandler: IRequestHandler<GetPackageDetailsQuery,PackageDetailsDto>{
         private readonly IDeliveryDbContext _dbContext;
 
         public GetPackageDetailsQueryHandler(IDeliveryDbContext dbContext){

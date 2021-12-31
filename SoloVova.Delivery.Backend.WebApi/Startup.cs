@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SoloVova.Delivery.Backend.Application;
 using SoloVova.Delivery.Backend.Persistence;
 
 namespace SoloVova.Delivery.Backend.WebApi{
     public class Startup{
         public void ConfigureServices(IServiceCollection services){
+            services.AddApplication();
             services.AddPersistence(Configuration);
             services.AddControllers();
             

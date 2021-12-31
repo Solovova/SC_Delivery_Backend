@@ -1,15 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SoloVova.Delivery.Backend.Application.Interfaces;
+﻿using System;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SoloVova.Delivery.Backend.WebApi.Controllers{
     [ApiController]
     [Route("api/[controller]/[action]")]
     public abstract class BaseController : ControllerBase{
+        private IMediator? _mediator;
 
-        
-        // private IMediator? _mediator;
-        //
-        // protected IMediator? Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        protected IMediator Mediator{
+            get{
+                _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+                if (this._mediator == null){
+                    throw new Exception("Mediator is null");
+                }
+
+                return this._mediator;
+            }
+        }
+
+
         //
         // internal Guid UserId{
         //     get{
