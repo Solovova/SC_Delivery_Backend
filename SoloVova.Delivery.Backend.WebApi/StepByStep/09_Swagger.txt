@@ -1,5 +1,6 @@
 7.01.   Install     -   WebApi          -> Swashbuckle.AspNetCore
-7.02.   Add         -   WebApi          -> Startup.cs/Configure
+7.02.   Add         -   WebApi          -> ConfigureSwaggerOptions
+7.03.   Add         -   WebApi          -> Startup.cs/Configure
 
                     app.UseSwagger();
                     app.UseSwaggerUI(config => {
@@ -10,3 +11,17 @@
                             config.RoutePrefix = string.Empty;
                         }
                     });
+                    
+                    
+7.03.   Add         -   WebApi          -> Startup.cs/ConfigureService                    
+                    services.AddTransient<IConfigureOptions<SwaggerGenOptions>,
+                                    ConfigureSwaggerOptions>();
+                                services.AddSwaggerGen();
+                                
+                                
+7.04.                             
+                    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
+                    
+                    
+7.05.
+[ApiExplorerSettings(IgnoreApi = true)] or describe all controllers

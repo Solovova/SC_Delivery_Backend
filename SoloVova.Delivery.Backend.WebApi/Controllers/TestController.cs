@@ -3,6 +3,7 @@
 namespace SoloVova.Delivery.Backend.WebApi.Controllers{
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class TestController : BaseController{
         // 
         // GET: /Test/
