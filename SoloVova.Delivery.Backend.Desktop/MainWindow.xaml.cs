@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AutoMapper;
 using MediatR;
+using SoloVova.Delivery.Backend.Application.Interfaces;
+using SoloVova.Delivery.Backend.Application.Mapping;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.CreatePackage;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.DeletePackage;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageList;
@@ -91,7 +95,15 @@ namespace SoloVova.Delivery.Backend.Desktop{
 
         private void ButtonDeleteAll_OnClick(object sender, RoutedEventArgs e){
             var context = Context.Context.Instance();
-            var getPackageListQueryHandler = new GetPackageListQueryHandler(context.deliveryDbContext);
+
+
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+                cfg.AddProfile(new AssemblyMappingProfile(typeof(IDeliveryDbContext).Assembly));
+            });
+            IMapper mapper = config.CreateMapper();
+
+            var getPackageListQueryHandler = new GetPackageListQueryHandler(context.deliveryDbContext, mapper);
             var cancellationToken = new CancellationToken();
 
             var listPackages =
