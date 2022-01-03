@@ -29,7 +29,8 @@ namespace SoloVova.Delivery.Backend.WebApi{
                     policy.AllowAnyOrigin();
                 });
             });
-            
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+            services.AddApiVersioning();
             // services.AddTransient<IConfigureOptions<SwaggerGenOptions>,
             //     ConfigureSwaggerOptions>();
             // services.AddSwaggerGen();
@@ -58,7 +59,7 @@ namespace SoloVova.Delivery.Backend.WebApi{
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
-
+            app.UseApiVersioning();
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });

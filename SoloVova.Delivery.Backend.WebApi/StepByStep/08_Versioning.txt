@@ -1,2 +1,15 @@
 8.01.   Install     -   WebApi          -> Microsoft.AspNetCore.Mvc.Versioning
 8.02.   Install     -   WebApi          -> Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer
+
+Startup.sc/ConfigureServices
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+            services.AddApiVersioning();
+
+Startup.sc/Configure
+            app.UseApiVersioning();
+            
+            
+            
+            Controllers
+            [ApiVersion("1.0")]
+            [Route("api/{version:apiVersion}/[controller]")]

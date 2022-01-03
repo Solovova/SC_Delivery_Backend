@@ -11,8 +11,9 @@ using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackag
 using SoloVova.Delivery.Backend.WebApi.Models;
 
 namespace SoloVova.Delivery.Backend.WebApi.Controllers{
+    [ApiVersion("2.0")]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/{version:apiVersion}/[controller]")]
     public class PackageController : BaseController{
         private readonly int _timedelay = 2000;
 
