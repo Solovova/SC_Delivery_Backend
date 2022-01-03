@@ -7,11 +7,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 using SoloVova.Delivery.Backend.Persistence;
 
 namespace SoloVova.Delivery.Backend.WebApi{
     public class Program{
         public static void Main(string[] args){
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .WriteTo.File("DeliveryWebAppLog-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
             
             var host = CreateHostBuilder(args).Build();
 
@@ -22,6 +28,7 @@ namespace SoloVova.Delivery.Backend.WebApi{
                     DbInitializer.Initialize(contest);
                 }
                 catch (Exception exception){
+                    Log.Fatal(exception, "An error occurred while app initialization");
                 }
             }
             
@@ -30,6 +37,7 @@ namespace SoloVova.Delivery.Backend.WebApi{
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

@@ -1,14 +1,1 @@
-1. Desktop Table
-    Реалізувати Del
-    Реалізувати Add
-    Реалізувати Detail
-    Реалізувати Update
-1.1. React реалізувати
-    Реалізувати Del
-    Реалізувати Add
-    Реалізувати Detail
-    Реалізувати Update
-2. Mediatr
-3. Mapper
-4. Validator
-5. WebApi <- Mediatr, Mapper, Validator
+https://www.youtube.com/watch?v=gA1uk_kGmVs&list=PLEtg-LdqEKXbpq4RtUp1hxZ6ByGjnvQs4&index=7&ab_channel=PlatinumDEV

@@ -1,2 +1,18 @@
+10.01.   Install     -   Application          -> Serilog
+10.02.   Install     -   Application          -> Serilog.Sinks.File
+10.03.   Install     -   WebApi               -> Serilog.AspNetCore
 
+10.04.   Add         -   Application          -> Behaviors/LoggingBehavior
+10.05.   Add         -   Application          -> DependencyInjection
+                    services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+
+10.06.   Add Program.cs
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .WriteTo.File("DeliveryWebAppLog-.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+                
+10.07.  Add Program.cs
+            .UseSerilog()
+              
 
