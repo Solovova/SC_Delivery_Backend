@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,15 +10,22 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SoloVova.Delivery.Backend.Application;
+using SoloVova.Delivery.Backend.Application.Interfaces;
+using SoloVova.Delivery.Backend.Application.Mapping;
 using SoloVova.Delivery.Backend.Persistence;
 
 namespace SoloVova.Delivery.Backend.WebApi{
     public class Startup{
         public void ConfigureServices(IServiceCollection services){
+            services.AddAutoMapper(config => {
+                config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+                config.AddProfile(new AssemblyMappingProfile(typeof(IDeliveryDbContext).Assembly));
+            });
+
             services.AddApplication();
             services.AddPersistence(Configuration);
             services.AddControllers();
-            
+
             services.AddCors(options => {
                 options.AddPolicy("AllowAll", policy => {
                     policy.AllowAnyHeader();
@@ -26,7 +34,7 @@ namespace SoloVova.Delivery.Backend.WebApi{
                 });
             });
         }
-        
+
         public IConfiguration Configuration{ get; }
 
         public Startup(IConfiguration configuration){

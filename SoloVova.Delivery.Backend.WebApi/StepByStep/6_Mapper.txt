@@ -1,0 +1,10 @@
+6.01.   Install     -   Application     -> AutoMapper
+6.02.   Install     -   Application     -> AutoMapper.Extensions.Microsoft.DependencyInjection
+6.03.   Add         -   Application     -> Behaviors/ValidationBehavior.sc
+6.04.   Add to structure hwo map from :IMapWith<Note> and method Mapping
+6.05.   Add         -   WebApi          -> Startup.sc
+                                services.AddAutoMapper(config => {
+                                    config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+                                    config.AddProfile(new AssemblyMappingProfile(typeof(IDeliveryDbContext).Assembly));
+                                });
+

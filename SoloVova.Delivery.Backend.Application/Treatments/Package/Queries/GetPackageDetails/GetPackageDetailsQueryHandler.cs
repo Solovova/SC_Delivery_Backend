@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SoloVova.Delivery.Backend.Application.Common.Exception;
@@ -8,9 +9,11 @@ using SoloVova.Delivery.Backend.Application.Interfaces;
 namespace SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackageDetails{
     public class GetPackageDetailsQueryHandler: IRequestHandler<GetPackageDetailsQuery,PackageDetailsDto>{
         private readonly IDeliveryDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public GetPackageDetailsQueryHandler(IDeliveryDbContext dbContext){
+        public GetPackageDetailsQueryHandler(IDeliveryDbContext dbContext, IMapper mapper){
             _dbContext = dbContext;
+            _mapper = mapper;
         }
         
         public async Task<PackageDetailsDto> Handle(GetPackageDetailsQuery request,CancellationToken cancellationToken){
@@ -23,11 +26,8 @@ namespace SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPa
                 throw new NotFoundException(nameof(Package), request.Id);
             }
             
-            return new PackageDetailsDto(){
-                Id = entity.Id,
-                Title = entity.Title,
-                Details = entity.Details
-            };
+            
+            return _mapper.Map<PackageDetailsDto>(entity);
         }
     }
 }
