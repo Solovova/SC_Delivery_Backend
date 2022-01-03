@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SoloVova.Delivery.Backend.Application.Interfaces;
@@ -10,7 +11,7 @@ namespace SoloVova.Delivery.Backend.Persistence{
             var connectionString = configuration["DbConnection"];
             services.AddDbContext<DeliveryDbContext>(options => { options.UseSqlite(connectionString); });
             services.AddScoped<IDeliveryDbContext>(provider =>
-                provider.GetService<DeliveryDbContext>());
+                provider.GetService<DeliveryDbContext>() ?? throw new Exception("Service DeliveryDbContext is null"));
             return services;
         }
     }
