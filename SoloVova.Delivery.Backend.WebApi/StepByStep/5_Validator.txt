@@ -1,0 +1,5 @@
+5.01.   Install     -   Application     -> FluentValidation
+5.02.   Install     -   Application     -> FluentValidation.DependencyInjectionExtensions
+5.03.   Add         -   Application     -> Behaviors/ValidationBehavior.sc
+5.04.   Add         -   Application     -> *Validator to all Commands and Queries
+
