@@ -1,0 +1,2 @@
+8.01.   Install     -   WebApi          -> Microsoft.AspNetCore.Mvc.Versioning
+8.02.   Install     -   WebApi          -> Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer

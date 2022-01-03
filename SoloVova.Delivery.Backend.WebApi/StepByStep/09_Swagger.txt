@@ -1,0 +1,12 @@
+7.01.   Install     -   WebApi          -> Swashbuckle.AspNetCore
+7.02.   Add         -   WebApi          -> Startup.cs/Configure
+
+                    app.UseSwagger();
+                    app.UseSwaggerUI(config => {
+                        foreach (var description in provider.ApiVersionDescriptions){
+                            config.SwaggerEndpoint(
+                                $"/swagger/{description.GroupName}/swagger.json",
+                                description.GroupName.ToUpperInvariant());
+                            config.RoutePrefix = string.Empty;
+                        }
+                    });
