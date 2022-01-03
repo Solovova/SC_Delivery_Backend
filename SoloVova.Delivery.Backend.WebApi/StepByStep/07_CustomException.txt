@@ -1,4 +1,4 @@
 7.01.   Add         -   WebApi     -> Middleware/CustomExceptionHandlerMiddleware
 7.02.   Add         -   WebApi     -> Middleware/CustomExceptionHandlerMiddlewareExtensions
 
-app.UseCustomExceptionHandler();
+app.UseCustomExceptionHandler(); 
