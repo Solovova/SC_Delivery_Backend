@@ -1,0 +1,12 @@
+11.01.  Create empty Web application Identity
+11.02.   Install     -   Identity     -> IdentityServer4
+11.03.  Add - Startup Middleware -> 
+                app.UseIdentityServer();
+                
+                services.AddIdentityServer()
+                                .AddInMemoryApiResources(new List<ApiResource>())
+                                .AddInMemoryIdentityResources(new List<IdentityResource>())
+                                .AddInMemoryApiScopes(new List<ApiScope>())
+                                .AddInMemoryClients(new List<Client>())
+                                .AddDeveloperSigningCredential();
+                it's minimum for start

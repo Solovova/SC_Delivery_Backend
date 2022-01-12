@@ -37,6 +37,14 @@ namespace SoloVova.Delivery.Backend.WebApi{
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((cotext, builder) => {
+                    
+                    builder.AddInMemoryCollection(new Dictionary<string, string>{
+                        {"name", "testName"},
+                        {"age", "31"}
+                    });
+                    builder.AddXmlFile("web.config");
+                })
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }

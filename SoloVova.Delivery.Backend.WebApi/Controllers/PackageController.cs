@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SoloVova.Delivery.Backend.Application.Interfaces;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.CreatePackage;
 using SoloVova.Delivery.Backend.Application.Treatments.Package.Commands.DeletePackage;
@@ -11,11 +13,15 @@ using SoloVova.Delivery.Backend.Application.Treatments.Package.Queries.GetPackag
 using SoloVova.Delivery.Backend.WebApi.Models;
 
 namespace SoloVova.Delivery.Backend.WebApi.Controllers{
+    
+    
     [ApiVersion("1.0")]
     [Produces("application/json")]
     [Route("api/{version:apiVersion}/[controller]")]
-    public class PackageController : BaseController{
+    public class PackageController: BaseController{
         private readonly int _timedelay = 2000;
+        
+
 
         /// <summary>
         /// Gets the list of notes
@@ -36,6 +42,14 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
             };
 
             var vm = await Mediator.Send(query);
+
+            var suffix = Configuration["SomeSetting1"] ?? "unknown value";
+            if (vm.Packages != null){
+                foreach (var package in vm.Packages){
+                    package.Title += suffix;
+                }    
+            }
+            
             return Ok(vm);
         }
 

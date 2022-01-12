@@ -1,6 +1,7 @@
 ﻿using System;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace SoloVova.Delivery.Backend.WebApi.Controllers{
@@ -8,6 +9,18 @@ namespace SoloVova.Delivery.Backend.WebApi.Controllers{
     [Route("api/[controller]/[action]")]
     public abstract class BaseController : ControllerBase{
         private IMediator? _mediator;
+        private IConfiguration? _configuration;
+
+        protected IConfiguration Configuration{
+            get{
+                _configuration ??= HttpContext.RequestServices.GetService<IConfiguration>();
+                if (this._configuration == null){
+                    throw new Exception("Configuration is null");
+                }
+
+                return this._configuration;
+            }
+        }
 
         protected IMediator Mediator{
             get{
